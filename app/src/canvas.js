@@ -52,4 +52,9 @@ function updateCanvas(canvas, change) {
     return copy;
 }
 
-export { initializeCanvas, updateCanvas };
+function drawCanvas(id, canvas) {
+    const element = document.getElementById(id);
+    console.log(element)
+}
+
+export { initializeCanvas, updateCanvas, drawCanvas };

@@ -1,0 +1,9 @@
+{
+  "short_name": "SDLE Assignment 2",
+  "name": "SDLE Assignment 2",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
