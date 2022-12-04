@@ -1,7 +1,4 @@
-import GUN from "https://cdn.skypack.dev/gun";
-import { drawCanvas, initializeCanvas, updateCanvas } from './canvas.js';
-import { printNode } from "./nodes.js";
-
+const GUN = require('gun')
 const gun = GUN();
 
 const node1Name = 'A';

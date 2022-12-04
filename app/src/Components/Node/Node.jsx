@@ -1,4 +1,6 @@
 import Canvas from "../Canvas/Canvas";
+import DrawForm from "../DrawForm/DrawForm";
+import SubscribeForm from "../SubscribeForm/SubscribeForm";
 
 export default function Node(props){
     const id = props.nodeData.id;
@@ -18,8 +20,12 @@ export default function Node(props){
             </div>
             <div className="row flex-grow-1">
                 <div className="col-4">
-                    <div className="row"></div>
-                    <div className="row"></div>
+                    <div className="row">
+                        <SubscribeForm id={id} subscriptions={subscriptions} />
+                    </div>
+                    <div className="row">
+                        <DrawForm id={id} subscriptions={subscriptions} />
+                    </div>
                 </div>
                 <div className="col-8">
                     <div className="h-100 d-flex justify-content-center">
