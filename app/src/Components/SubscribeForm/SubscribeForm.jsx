@@ -14,7 +14,7 @@ export default function SubscribeForm(props){
     }
 
     return (
-        <form className="w-50" onSubmit={submitForm}>
+        <form className="w-100" onSubmit={submitForm}>
             <label className="form-label" htmlFor="node-id-input">Subscribe to a new node:</label>
             <input
             type="text"
@@ -23,7 +23,7 @@ export default function SubscribeForm(props){
             value={newSubscribeName}
             onChange={(e) => setNewSubscribeName(e.target.value)}
             />
-            <input type="submit" className="my-2 btn-secondary" value="Search" />
+            <input type="submit" className="my-2 btn-secondary" value="Subscribe" />
         </form>
     )
 }

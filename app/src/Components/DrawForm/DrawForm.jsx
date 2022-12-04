@@ -47,7 +47,7 @@ export default function DrawForm(props){
                     <input type="text" className="form-control" id="y-end-input" value={input.yEnd} onChange={(e) => setInput({...input, yEnd : parseInt(e.target.value)})}/>
                 </div>
                 <div className="col d-flex justify-content-center align-items-center">
-                    <input type="submit" className="h-50 my-2 btn-secondary" value="Search" />
+                    <input type="submit" className="h-50 my-2 btn-secondary" value="Draw" />
                 </div>
             </div>
         </form>
