@@ -11,7 +11,7 @@ export default function Canvas(props){
     }
 
     return (
-        <table id={id + `-canvas`} className="w-50 h-50 border-secondary border border-4 border-dark">
+        <table id={id + `-canvas`} className="h-100 w-75 border-secondary border border-4 border-dark">
             <tbody>
                 {buildTable(canvasContents)}
             </tbody>

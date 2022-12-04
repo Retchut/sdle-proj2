@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { drawCanvas } from './canvas';
-import Node from './Components/Node.jsx';
+import Node from './Components/Node/Node.jsx';
 
 function App() {
   const emptycanvas = {
@@ -20,6 +20,8 @@ function App() {
     { id : 'alice', subscriptions : { 0 : "test1", 1 : "test2" }, changes : {}, canvas : emptycanvas },
     { id : 'bob', subscriptions : { 0 : "test3", 1 : "test4" }, changes : {}, canvas : emptycanvas },
     { id : 'josh', subscriptions : { 0 : "test3", 1 : "test4" }, changes : {}, canvas : emptycanvas },
+    { id : 'andy', subscriptions : { 0 : "test3", 1 : "test4" }, changes : {}, canvas : emptycanvas },
+    { id : 'josh', subscriptions : { 0 : "test3", 1 : "test4" }, changes : {}, canvas : emptycanvas },
     { id : 'andy', subscriptions : { 0 : "test3", 1 : "test4" }, changes : {}, canvas : emptycanvas }
   ]
 
@@ -36,7 +38,6 @@ function App() {
         }
     }
     
-    console.log(nodeArrays)
     return nodeArrays;
   }
   
@@ -44,7 +45,7 @@ function App() {
     <div className="vw-100 vh-100 m-0 overflow-auto">
       {getNodeRows(nodes).map(row => {
         return (
-          <div className="row m-0">
+          <div className="row m-0 h-50">
             {row.map(node => <Node nodeData={node} />)}
           </div>
         )
