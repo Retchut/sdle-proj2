@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Gun from 'gun';
 import Node from './Components/Node/Node.jsx';
 
 function App() {
@@ -42,7 +43,15 @@ function App() {
     
     return nodeArrays;
   }
-  
+
+const gun = Gun();
+const jeff = gun.get('jeff')
+jeff.put({'name':'jeff', 'code' : 1});
+let code;
+jeff.get('code').once((value) => {
+  code = value
+});
+
   return (
     <div className="vw-100 vh-100 m-0 overflow-auto">
       {getNodeRows(nodes).map(row => {
