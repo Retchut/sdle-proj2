@@ -4,21 +4,19 @@ const CANVAS_SIZE = 10;
  * Generates an empty canvas
  * @returns The generated canvas object, of size CANVAS_SIZE*CANVAS_SIZE
  */
-function initializeCanvas(gun){
+function initializeCanvas(){
     const canvas = {};
     const row = {};
     for(let x = 0; x < CANVAS_SIZE; x++){
         row[x] = '0';
     }
 
-    const canvasNode = gun.get("canvas").put({})
     for(let y = 0; y < CANVAS_SIZE; y++){
         canvas[y] = {};
         Object.assign(canvas[y], row);
-        canvasNode.set(canvas[y])
     }
 
-    return canvasNode;
+    return canvas;
 }
 
 /**

@@ -1,6 +1,7 @@
 import GUN from "https://cdn.skypack.dev/gun";
 import { initializeCanvas, updateCanvas } from './canvas.js';
 import { printNode } from "./nodes.js";
+import * as UNSET from "https://cdn.jsdelivr.net/npm/gun/lib/unset.js";
 
 var gun = GUN();
 
@@ -12,58 +13,41 @@ var gun = GUN();
 //var node2Canvas = initializeCanvas(gun);
 
 const node2Name =  "Node_2";
-var node2 = gun.get(node2Name)
-var canvas = initializeCanvas(gun);
-node2.get('canvas').put(initializeCanvas(gun))
+const emptyCanvas = initializeCanvas(gun);
+//var node2 = gun.get(node2Name).put({canvas: emptyCanvas})
+gun.get(node2Name).get('canvas').put(null)
+gun.get(node2Name).get('canvas').put({canvas: null})
 
-node2.get('iddd').put(node2Name)
-node2.get('subscriptions').put("aaaa")
-node2.get('subscriptions').put("ss")
-node2.get('subscriptions').put("ssss")
-//node2.get('canvas').once(data => console.log(data._['#']))  // test/node
-
-
-var gun2 = gun.get('data')
-gun2.put({
-  object1: {ii: "ii"},
-  object2: {oo: "oo"}
+var gun2 = gun.get('data').put({
+    object1: {ii: "ii"},
+    object2: null
 })
 
 // set 'object3' to a new node
 gun2.get('object3').put({
   field: 'value'
 })
+//gun2.get('object3').put(null)
 
-gun2.get('object3').put(null)
-
-console.log(gun2)
+//console.log("gun2: ")
+gun2.map().once(function(item, key){
+    //console.log(item)
+    //console.log(key)
+})
 
 var a = []
-canvas.map(function(item, key){ // print them back out
+gun.get(node2Name).get('canvas').map(function(item, key){ // print them back out
   a.push(item)
 });
-//console.log(a)
-
-
-//console.log("node2:")
-node2.map().once(function(item, key){
-    //console.log("key: " + key)
-    //console.log("value: " + item)
+console.log("node2:")
+console.log(a)
+gun.get(node2Name).get('canvas').once(function(item, key){
+  //console.log("key: " + key)
+  console.log("value: " + item)
+  console.log("key: " + key)
 });
 
-
-
-console.log("Friends test:")
-var alice = gun.get('alice').put({name: 'alice', age: 22});
-var bob = gun.get('bob').put({name: 'bob', age: 24});
-var bob2 = gun.get('bob').put(null);
-var carl = gun.get('carl').put({name: 'carl', age: 16});
-var dave = gun.get('dave').put({name: 'dave', age: 42});
-
-console.log(gun.get('bob'))
-
-console.log("END Friends test")
-
+//node2.unset(node2.get('subscriptions'))
 
 /*
 var myArray = [{hello: 'world', timestamp: 12}, {hello: 'are', timestamp: 1}, {hello: 'world', timestamp: 13}, {hello: 'wonderful', typestamp: 33}];

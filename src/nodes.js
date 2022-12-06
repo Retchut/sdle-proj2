@@ -43,8 +43,8 @@ const updateNode = (gun, subscriber, change) => {
 const printNode = (node) => {
     //console.log("printing " + node)
     node.map((item, key) => { // print them back out
-        //console.log(key);
-        console.log(item)
+        console.log("key: " + key);
+        console.log("item: " + item)
     });
 }
 
