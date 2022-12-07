@@ -27,7 +27,17 @@ function initializeCanvas(){
  */
 function updateCanvas(canvas, change) {
     const copy = {};
-    Object.assign(copy, canvas);
+    canvas.map().once(function(data, key){
+        //copy[key] = data
+        copy[key] = {}
+        //Object.assign(copy[key], data);
+        //console.log(key)
+        //console.log(data)
+    }) 
+    console.log(copy["0"])
+
+    //Object.assign(copy, canvas);
+
     //id|timestamp|char|start|end
     //alice|timestamp|c|x,y|x,y
     // { timestamp : 'miliseconds since epoch' , char : 'c', start : '0,0', end : '1,1' }

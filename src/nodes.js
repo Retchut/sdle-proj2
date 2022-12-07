@@ -31,7 +31,7 @@
 /**
  * Updates a subscriber with the change passed as argument
  * @param {string} subscriber   id of the node to update
- * @param {object} change       changes to update the node with
+ * @param {object} change       change to update the node with
  */
 const updateNode = (gun, subscriber, change) => {
     const subscriberNode = gun.get(subscriber);
