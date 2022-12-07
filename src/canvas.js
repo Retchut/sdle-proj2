@@ -22,19 +22,21 @@ function initializeCanvas(){
 /**
  * Updates a canvas with a change's contents
  * @param {*} canvas    The canvas to update
- * @param {*} change    The changes to update the canvas with
+ * @param {*} change    The change to update the canvas with
  * @returns     The updated canvas
  */
 function updateCanvas(canvas, change) {
-    const copy = {};
+    var copy = {};
+    var data_test
     canvas.map().once(function(data, key){
         //copy[key] = data
-        copy[key] = {}
+        //copy[key] = {}
         //Object.assign(copy[key], data);
-        //console.log(key)
-        //console.log(data)
-    }) 
-    console.log(copy["0"])
+        //console.log(Object.keys(copy).length)
+        key_test = data
+    })
+    console.log(data)
+    //console.log(Object.keys(copy).length)
 
     //Object.assign(copy, canvas);
 
