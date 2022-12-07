@@ -1,12 +1,12 @@
-import * as App from "./Peer.js";
 import GUN from "https://cdn.skypack.dev/gun";
+import * as App from "./Peer.js";
 import * as Nodes from "./nodes.js";
 
 
 
 localStorage.clear()
 
-/*
+
 var node1 = new App.Peer("node_1")
 var node2 = new App.Peer("node_2")
 
@@ -26,13 +26,3 @@ node1.node.once(function (data) {
 a.jo= "jo"
 
 console.log(Object.keys(a))
-*/
-
-const gun = Gun();
-const jeff = gun.get('jeff')
-jeff.put({'name':'jeff', 'code' : 1});
-let code = [];
-jeff.get('code').once((value) => {
-  code.push(value)
-});
-console.log(code)
