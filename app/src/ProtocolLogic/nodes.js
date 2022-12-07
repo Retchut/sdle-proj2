@@ -1,3 +1,5 @@
+import { updateCanvas } from './canvas.js';
+
 /**
  * Subscribes a node to another node
  * @param {string} subscriber       Node that will perform the subscription
@@ -23,9 +25,6 @@
 
     // set up subscription
     newSubscriptionNode.on((change) => updateNode(subscriber, change));
-
-    // add new subscription to the local array of nodes we are subscribed to
-    subscriptions.set(newSubscriptionNode);
 }
 
 /**

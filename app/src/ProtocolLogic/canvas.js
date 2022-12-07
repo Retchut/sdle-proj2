@@ -27,15 +27,12 @@ function initializeCanvas(){
  */
 function updateCanvas(canvas, change) {
     var copy = {};
-    var data_test
     canvas.map().once(function(data, key){
         //copy[key] = data
         //copy[key] = {}
         //Object.assign(copy[key], data);
         //console.log(Object.keys(copy).length)
-        key_test = data
     })
-    console.log(data)
     //console.log(Object.keys(copy).length)
 
     //Object.assign(copy, canvas);
@@ -64,4 +61,9 @@ function updateCanvas(canvas, change) {
     return copy;
 }
 
-export { initializeCanvas, updateCanvas };
+function drawCanvas(id, canvas) {
+    const element = document.getElementById(id);
+    console.log(element)
+}
+
+export { initializeCanvas, updateCanvas, drawCanvas };
