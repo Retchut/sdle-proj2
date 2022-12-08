@@ -50,7 +50,7 @@ function App() {
 
     node2.subscribe("node_1")
     console.log("Printing")
-    node1.addChange({ start : "0,0", end : "1,1" })
+    node1.addChange({ timestamp: 1000, start : "0,0", end : "1,1" })
     
     //node1.print()
     //Canvas.updateCanvas(node1.node.get('canvas'))

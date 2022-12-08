@@ -27,13 +27,22 @@ function initializeCanvas(){
  */
 function updateCanvas(canvas, change) {
     var copy = {};
-    canvas.map().once(function (data, key) {
-        copy[key] = data
+    canvas.once(async (data, key) => {
+        //copy[key] = data
         //copy[key] = {}
-        //Object.assign(copy[key], data);
+        //Object.assign(copy, data);
+        console.log(data["0"])
         //console.log(Object.keys(copy).length)
     })
-    setTimeout(function(){
+    console.log(copy)
+    /*
+    setTimeout(async() => {
+        if (running){
+            console.log("Running")
+            return
+        }
+        running = true
+        console.log("updating canvas")
         //console.log(Object.keys(copy).length)
         
         //Object.assign(copy, canvas);
@@ -53,16 +62,20 @@ function updateCanvas(canvas, change) {
         
         for(let y = 0; y < CANVAS_SIZE; y++){
             for(let x = 0; x < CANVAS_SIZE; x++){
+                console.log()
                 //console.log("x: " + x)
                 //console.log("y: " + y)
-                //console.log(x,y)
-                copy[x] = char;
+                //copy[y] = char;
                 //console.log(copy[0])
             }
         }
+        console.log(change)
         
-        return {};
-    }, 2000)
+        return "ssss";
+    }, 1000)
+    */
+
+    return copy
 }
 
 function drawCanvas(id, canvas) {

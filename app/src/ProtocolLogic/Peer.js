@@ -67,7 +67,12 @@ class Peer {
         // { timestamp : 'miliseconds since epoch' , char : 'c', start : '0,0', end : '1,1' }
         this.node.get('changes').set(change);
         console.log("change: ", change)
-        this.node.get('canvas').put(Canvas.updateCanvas(this.node.get('canvas'), change));
+
+        const canvas = this.node.get('canvas')
+        console.log(canvas)
+        const new_canvas = Canvas.updateCanvas(canvas, change);
+        //console.log(new_canvas)
+        //canvas.put(new_canvas)
     }
 }
 
