@@ -8,12 +8,13 @@ function App() {
 
 	// Local state (userID and feed to be displayed)
 	// const [userID, setUserID] = useState("");
-	const [userID, setUserID] = useState("aaaaaaaaaaaaaaaaa");
+	const [userID, setUserID] = useState("");
 
 	return (
 		<div className="vw-100 vh-100 m-0 overflow-auto">
 			{ /* Displays the UserInputForm if the userID is "" */ }
-			{ userID === "" && 
+			{ 
+			  userID === "" && 
 				<div className="row m-0 h-50">
 					<div className="col-6 d-flex flex-column p-4">
 						<UserInputForm setUserID={setUserID} />

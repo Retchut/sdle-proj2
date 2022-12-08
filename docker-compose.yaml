@@ -6,6 +6,11 @@ services:
     container_name: sdle-frontend
     ports:
       - "3000:3000"
+  client2:
+    build: ./client
+    container_name: sdle-frontend2
+    ports:
+      - "3001:3000"
   gun:
     build: ./server
     container_name: sdle-gun
