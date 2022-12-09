@@ -1,15 +1,6 @@
 import { useState, useEffect, useReducer } from 'react';
-import Gun from 'gun';
 
 import NewPostForm from '../NewPostForm/NewPostForm';
-
-// Connects to gun
-const gun = Gun({
-	localStorage: false,
-	peers: [
-		`http://localhost:${process.env.REACT_APP_GUN_PORT}/gun`
-	]
-})
 
 /**
  * @brief Function which updates the state (posts). Used by the useReducer hook
@@ -24,7 +15,9 @@ function postReducer(state, post) {
 }
 
 export default function Feed(props){
+    const gun = props.gun;
     const userID = props.userID;
+    const feedID = props.feedID;
 
     // posts state
 	const [feedPosts, dispatch] = useReducer(postReducer, { posts: [] });
@@ -32,7 +25,7 @@ export default function Feed(props){
 	// update state on the user's posts node when the state changes
 	useEffect(() => {
 		// gets the posts node
-		const posts = gun.get(userID).get('posts'); // TODO: this is fetching ALL posts right now
+		const posts = gun.get(feedID).get('posts'); // TODO: this is fetching ALL posts right now
 
 		// upon receiving updates from the posts node, calls a function on each update
 		posts.map().once(post => {
@@ -52,7 +45,6 @@ export default function Feed(props){
 		// gets the posts node
 		const posts = gun.get(userID).get("posts"); // TODO: this is fetching ALL posts right now
 
-        console.log(userID, posts);
 		// Adds an entry to the node
 		posts.set({
 			id: newPost.id,    // TODO: is the parameter name inside gun id?
@@ -74,11 +66,13 @@ export default function Feed(props){
     return (
         <div id={1} className="col-6 d-flex flex-column p-4">
             <div className="row">
-                <h3 className="w-auto">{userID}'s feed</h3>
+                <h3 className="w-auto">{feedID}'s feed</h3>
             </div>
             <div className="row flex-grow-1">
                 <div className="row">
-                    <NewPostForm savePost={savePost} />
+                    { userID === feedID && 
+                        <NewPostForm id={userID} savePost={savePost} />
+                    }
                 </div>
                 <div className="row">
                     <div className="h-100 d-flex flex-column align-items-center overflow-auto">

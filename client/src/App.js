@@ -1,13 +1,21 @@
 import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Gun from 'gun';
 
 import UserInputForm from './Components/UserInputForm/UserInputForm';
 import Feed from './Components/Feed/Feed';
+	
+// gun instance
+const gun = Gun({
+      localStorage: false,
+      peers: [
+              `http://localhost:${process.env.REACT_APP_GUN_PORT}/gun`
+      ]
+})
 
 function App() {
 
 	// Local state (userID and feed to be displayed)
-	// const [userID, setUserID] = useState("");
 	const [userID, setUserID] = useState("");
 
 	return (
@@ -24,7 +32,7 @@ function App() {
 			{ /* Displays the Board if the userID is not "" */ }
 			{/* { userID !== "" && <UserInputForm setUserID={setUserID} />} */}
 			{ userID !== "" && 
-				<Feed userID={userID} />
+				<Feed gun={gun} userID={userID} feedID={"B"} />
 			}
 		</div>
 	)
