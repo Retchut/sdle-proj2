@@ -25,7 +25,7 @@ export default function Feed(props){
 	// update state on the user's posts node when the state changes
 	useEffect(() => {
 		// gets the posts node
-		const posts = gun.get(feedID).get('posts'); // TODO: this is fetching ALL posts right now
+		const posts = gun.get(feedID).get('posts');
 
 		// upon receiving updates from the posts node, calls a function on each update
 		posts.map().once(post => {
@@ -43,7 +43,7 @@ export default function Feed(props){
 	 */
 	function savePost(newPost) {
 		// gets the posts node
-		const posts = gun.get(userID).get("posts"); // TODO: this is fetching ALL posts right now
+		const posts = gun.get(userID).get("posts");
 
 		// Adds an entry to the node
 		posts.set({

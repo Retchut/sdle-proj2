@@ -4,17 +4,20 @@ import Gun from 'gun';
 
 import UserInputForm from './Components/UserInputForm/UserInputForm';
 import Feed from './Components/Feed/Feed';
-	
+
+const id = 9000 + Number(process.env.REACT_APP_ID)
+const peer = 9000 + Number(process.env.REACT_APP_PEER_ID)
+
 // gun instance
-const gun = Gun({
-      localStorage: false,
-      peers: [
-              `http://localhost:${process.env.REACT_APP_GUN_PORT}/gun`
-      ]
-})
+var gun
+if (process.env.REACT_APP_PEER_ID == ""){
+	gun = Gun(`http://localhost:${id}/gun`)
+}else{
+	console.log("Front-end: Connecting to peer " + peer)
+	gun = Gun(`http://localhost:${peer}/gun`)
+}
 
 function App() {
-
 	// Local state (userID and feed to be displayed)
 	const [userID, setUserID] = useState("");
 
