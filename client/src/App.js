@@ -17,6 +17,10 @@ function App() {
 
 	// Local state (userID and feed to be displayed)
 	const [userID, setUserID] = useState("");
+	const feeds = [];
+	if (userID !== "") {
+		feeds.push(userID);
+	}
 
 	return (
 		<div className="vw-100 vh-100 m-0 overflow-auto">
@@ -32,7 +36,7 @@ function App() {
 			{ /* Displays the Board if the userID is not "" */ }
 			{/* { userID !== "" && <UserInputForm setUserID={setUserID} />} */}
 			{ userID !== "" && 
-				<Feed gun={gun} userID={userID} feedID={"B"} />
+				<Feed gun={gun} userID={userID} feedID={userID} />
 			}
 		</div>
 	)
