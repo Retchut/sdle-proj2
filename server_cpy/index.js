@@ -17,5 +17,9 @@ if (process.argv.length <= 3){
     });
 }else{
     console.log("Server: Connecting to peer " + peer)
-    Gun(`http://localhost:${peer}/gun`);
+    Gun( 
+    {
+        web : server,
+        peers: [`http://localhost:${peer}/gun`]
+    });
 }
