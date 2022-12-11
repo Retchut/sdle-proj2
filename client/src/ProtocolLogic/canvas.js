@@ -27,38 +27,55 @@ function initializeCanvas(){
  */
 function updateCanvas(canvas, change) {
     var copy = {};
-    canvas.map().once(function(data, key){
+    canvas.once(async (data, key) => {
         //copy[key] = data
         //copy[key] = {}
-        //Object.assign(copy[key], data);
+        //Object.assign(copy, data);
+        console.log(data["0"])
         //console.log(Object.keys(copy).length)
     })
-    //console.log(Object.keys(copy).length)
-
-    //Object.assign(copy, canvas);
-
-    //id|timestamp|char|start|end
-    //alice|timestamp|c|x,y|x,y
-    // { timestamp : 'miliseconds since epoch' , char : 'c', start : '0,0', end : '1,1' }
-    // TODO: compare timestamps and change localNodeChanges
-    // const timestamp = change.timestamp;
-    // const char = change.char;
-    // const start = change.start.split(',');
-    // const end = change.end.split(',');
-    const timestamp = change.timestamp;
-    const char = change.char;
-    const start = change.start.split(',');
-    const end = change.end.split(',');
-
-    for(let y = 0; y < CANVAS_SIZE; y++){
-        for(let x = 0; x < CANVAS_SIZE; x++){
-            if(x === parseInt(start[0]) && y === parseInt(start[1]) ||
-                x === parseInt(end[0]) && y === parseInt(end[1]))
-                copy[y][x] = char;
+    console.log(copy)
+    /*
+    setTimeout(async() => {
+        if (running){
+            console.log("Running")
+            return
         }
-    }
+        running = true
+        console.log("updating canvas")
+        //console.log(Object.keys(copy).length)
+        
+        //Object.assign(copy, canvas);
+        
+        //id|timestamp|char|start|end
+        //alice|timestamp|c|x,y|x,y
+        // { timestamp : 'miliseconds since epoch' , char : 'c', start : '0,0', end : '1,1' }
+        // TODO: compare timestamps and change localNodeChanges
+        // const timestamp = change.timestamp;
+        // const char = change.char;
+        // const start = change.start.split(',');
+        // const end = change.end.split(',');
+        const timestamp = change.timestamp;
+        const char = change.char;
+        const start = change.start.split(',');
+        const end = change.end.split(',');
+        
+        for(let y = 0; y < CANVAS_SIZE; y++){
+            for(let x = 0; x < CANVAS_SIZE; x++){
+                console.log()
+                //console.log("x: " + x)
+                //console.log("y: " + y)
+                //copy[y] = char;
+                //console.log(copy[0])
+            }
+        }
+        console.log(change)
+        
+        return "ssss";
+    }, 1000)
+    */
 
-    return copy;
+    return copy
 }
 
 function drawCanvas(id, canvas) {

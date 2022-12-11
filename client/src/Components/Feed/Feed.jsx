@@ -1,18 +1,6 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect } from 'react';
 
 import NewPostForm from '../NewPostForm/NewPostForm';
-
-/**
- * @brief Function which updates the state (posts). Used by the useReducer hook
- * @param {Object} state - The current state
- * @param {Object} post - post to append to the state
- * @returns The updated state
- */
-function postReducer(state, post) {
-	return {
-		posts: [post, ...state.posts]
-	}
-}
 
 export default function Feed(props){
     const gun = props.gun;
@@ -20,22 +8,23 @@ export default function Feed(props){
     const feedID = props.feedID;
 
     // posts state
-	const [feedPosts, dispatch] = useReducer(postReducer, { posts: [] });
+    const [feedPosts, setFeedPosts] = useState([])
 
 	// update state on the user's posts node when the state changes
 	useEffect(() => {
 		// gets the posts node
-		const posts = gun.get(feedID).get('posts'); // TODO: this is fetching ALL posts right now
+		const posts = gun.get(userID);
 
 		// upon receiving updates from the posts node, calls a function on each update
 		posts.map().once(post => {
 			// updates the local feed
-			dispatch({
+			setFeedPosts( oldFeedPosts =>[{
 				id: post.id,               // sender id
 				post: post.post,           // their post
 				timestamp: post.timestamp  // post timestamp
-			})
+			}, ...oldFeedPosts])
 		})
+        // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [userID]);
 
 	/**
@@ -43,14 +32,15 @@ export default function Feed(props){
 	 */
 	function savePost(newPost) {
 		// gets the posts node
-		const posts = gun.get(userID).get("posts"); // TODO: this is fetching ALL posts right now
-
+		const posts = gun.get(userID);
+        
 		// Adds an entry to the node
 		posts.set({
 			id: newPost.id,    // TODO: is the parameter name inside gun id?
 			post: newPost.post,  // TODO: is the parameter name inside gun post?
 			timestamp: Date.now()  // TODO: is the parameter name inside gun timestamp?
 		})
+        
 	}
 
     /**
@@ -77,7 +67,7 @@ export default function Feed(props){
                 <div className="row">
                     <div className="h-100 d-flex flex-column align-items-center overflow-auto">
                     {
-                        feedPosts.posts.map((post, index) => (
+                        feedPosts.map((post, index) => (
                         <div key={`post-` + index} className="my-2 pt-2 px-3 bg-secondary rounded">
                             <h2>From: {post.id}</h2>
                             <p>{getDateString(post.timestamp)}</p>
@@ -91,34 +81,3 @@ export default function Feed(props){
         </div>
     );
 }
-
-// Don't delete the next few posts of comments pls :) - Mário
-
-// const buildRows = () => {
-// 	let rowArray = [];
-// 	const colNum = 2;
-
-// 	for(let i = 0; i < subscribedFeeds.length; i++){
-// 		if(i % colNum === 0){
-// 			rowArray.push([subscribedFeeds[i]]);
-// 		}
-// 		else{
-// 			rowArray[Math.floor(i/colNum)].push(subscribedFeeds[i]);
-// 		}
-// 	}
-
-// 	return rowArray;
-// }
-
-
-// return (
-//   <div className="vw-100 vh-100 m-0 overflow-auto">
-//     {getNodeRows(nodes).map(row => {
-//       return (
-//         <div className="row m-0 h-50">
-//           {row.map(node => <Node nodeData={node} />)}
-//         </div>
-//       )
-//     })}
-//   </div>
-// );
