@@ -45,12 +45,17 @@ const gun = Gun({
 
 
 function App() {
+
+	// const feeds = [];
+	// if (name !== "") {
+	// 	feeds.push(name);
+	// }
+
 	return (
 		<div className="vw-100 vh-100 m-0 overflow-auto">
 			{ name !== "" && 
 				<Feed gun={gun} userID={name} feedID={name} />
 			}
-      
 		</div>
 	)
 }
