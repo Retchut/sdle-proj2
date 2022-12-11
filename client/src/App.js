@@ -14,7 +14,9 @@ if (process.env.REACT_APP_PEER_ID == ""){
 	gun = Gun(`http://localhost:${id}/gun`)
 }else{
 	console.log("Front-end: Connecting to peer " + peer)
-	gun = Gun(`http://localhost:${peer}/gun`)
+	gun = Gun({
+		peers: [`http://localhost:${id}/gun`, `http://localhost:${peer}/gun`]
+	})
 }
 
 function App() {
