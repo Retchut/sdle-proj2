@@ -17,10 +17,10 @@ export default function Feed(props){
 		// const posts = gun.get(feedID);
 		const posts = gun.get(feedID).get('posts');
         const subscriptions = gun.get(feedID).get('subscriptions');
-        const postsSubscribed = []
 
 		// upon receiving updates from the posts node, calls a function on each update
 		posts.map().once(post => {
+            console.log(post)
 			// updates the local feed
             const newPost = {
 				id: post.id,               // sender id
@@ -46,7 +46,7 @@ export default function Feed(props){
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
-    const orderedFeedPosts = useMemo(() => feedPosts.posts.sort((p1, p2) => p2.timestamp - p1.timestamp), [feedPosts])
+    const orderedFeedPosts = useMemo(() => feedPosts.sort((p1, p2) => p2.timestamp - p1.timestamp), [feedPosts])
 
 	/**
 	 * @brief Saves post to the posts node
