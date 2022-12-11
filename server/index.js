@@ -35,7 +35,7 @@ if(process.argv[4] !== undefined){
     
 const server = app.listen(id, () => {
     console.log(`Gun listening at http://localhost:${id}/gun`)
-    let gun = Gun({
+    var gun = Gun({
         localStorage : false,
         radisk : false,
         web : server,
@@ -44,6 +44,7 @@ const server = app.listen(id, () => {
     
     const name = process.argv[3]
     gun.put({ name : "empty" })
+    gun.get(name).put({ posts : "empty", subscriptions : "empty" })
     
     let sleep = function sleep(ms) {
         return new Promise((resolve) => {
@@ -54,12 +55,13 @@ const server = app.listen(id, () => {
     var counter = 0
     const fun = async () => {
         console.log(counter)
-        gun.get(name).map().once( async (item) => {
+        counter++;
+        gun.get(name).get("posts").map().once( async (item) => {
             console.log(item)
         })
         await sleep(1000)
         fun()
     }
     
-    //fun()
+    fun()
 })
