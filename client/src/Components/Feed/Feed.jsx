@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect } from 'react';
 
 import NewPostForm from '../NewPostForm/NewPostForm';
 
@@ -8,17 +8,15 @@ export default function Feed(props){
     const feedID = props.feedID;
 
     // posts state
-	//const [feedPosts, dispatch] = useReducer(postReducer, { posts: [] });
     const [feedPosts, setFeedPosts] = useState([])
 
 	// update state on the user's posts node when the state changes
 	useEffect(() => {
 		// gets the posts node
-		const posts = gun.get(userID).get('posts');
+		const posts = gun.get(userID);
 
 		// upon receiving updates from the posts node, calls a function on each update
 		posts.map().once(post => {
-            console.log(post)
 			// updates the local feed
 			setFeedPosts( oldFeedPosts =>[{
 				id: post.id,               // sender id
@@ -26,7 +24,7 @@ export default function Feed(props){
 				timestamp: post.timestamp  // post timestamp
 			}, ...oldFeedPosts])
 		})
-        console.log("------ useEffect End -------")
+        // eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [userID]);
 
 	/**
@@ -34,12 +32,8 @@ export default function Feed(props){
 	 */
 	function savePost(newPost) {
 		// gets the posts node
-		const posts = gun.get(userID).get("posts");
-        //console.log(newPost)
-        posts.map().once( async (val) => {
-            console.log(val)
-        })
-
+		const posts = gun.get(userID);
+        
 		// Adds an entry to the node
 		posts.set({
 			id: newPost.id,    // TODO: is the parameter name inside gun id?
@@ -87,34 +81,3 @@ export default function Feed(props){
         </div>
     );
 }
-
-// Don't delete the next few posts of comments pls :) - Mário
-
-// const buildRows = () => {
-// 	let rowArray = [];
-// 	const colNum = 2;
-
-// 	for(let i = 0; i < subscribedFeeds.length; i++){
-// 		if(i % colNum === 0){
-// 			rowArray.push([subscribedFeeds[i]]);
-// 		}
-// 		else{
-// 			rowArray[Math.floor(i/colNum)].push(subscribedFeeds[i]);
-// 		}
-// 	}
-
-// 	return rowArray;
-// }
-
-
-// return (
-//   <div className="vw-100 vh-100 m-0 overflow-auto">
-//     {getNodeRows(nodes).map(row => {
-//       return (
-//         <div className="row m-0 h-50">
-//           {row.map(node => <Node nodeData={node} />)}
-//         </div>
-//       )
-//     })}
-//   </div>
-// );

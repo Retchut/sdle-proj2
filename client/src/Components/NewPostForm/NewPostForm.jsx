@@ -12,7 +12,6 @@ export default function NewPostForm(props){
      */
      const submitForm = (e) => {
         e.preventDefault(); // prevent default submit action (page reload)
-        console.log("posting")
         savePost({ id : id, post : input });
 		// Resets the form input to its initial state
 		setInput('')

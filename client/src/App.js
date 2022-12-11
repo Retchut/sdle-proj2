@@ -1,9 +1,6 @@
-// import { useState } from 'react';
-import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Gun from 'gun';
 
-import UserInputForm from './Components/UserInputForm/UserInputForm';
 import Feed from './Components/Feed/Feed';
 
 const name = process.env.REACT_APP_NAME
@@ -48,12 +45,8 @@ const gun = Gun({
 
 
 function App() {
-    console.log(server)
 	return (
 		<div className="vw-100 vh-100 m-0 overflow-auto">
-			
-			{ /* Displays the Board if the userID is not "" */ }
-			{/* { userID !== "" && <UserInputForm setUserID={setUserID} />} */}
 			{ name !== "" && 
 				<Feed gun={gun} userID={name} feedID={name} />
 			}

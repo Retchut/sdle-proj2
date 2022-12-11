@@ -11,8 +11,7 @@ if(process.argv[3] === undefined){
     process.exit(1)
 }
 
-const id = 9000 + Number(process.argv[2]);      // where our server is
-
+const id = 9000 + Number(process.argv[2]);
 if(id < 9000 || id > 9999){
     console.log(`Port ${id} is reserved`);
     process.exit(1);
@@ -44,11 +43,7 @@ const server = app.listen(id, () => {
     });
     
     const name = process.argv[3]
-    gun.get(name).put({posts : "empty"})
-    
-    // gun.get(name).on(async(data) => {
-    //     console.log(data)
-    // })
+    gun.put({ name : "empty" })
     
     let sleep = function sleep(ms) {
         return new Promise((resolve) => {
@@ -58,9 +53,8 @@ const server = app.listen(id, () => {
     
     var counter = 0
     const fun = async () => {
-        console.log(counter++)
-        //counter++
-        gun.get(name).get("posts").map().once( async (item) => {
+        console.log(counter)
+        gun.get(name).map().once( async (item) => {
             console.log(item)
         })
         await sleep(1000)
@@ -69,22 +63,3 @@ const server = app.listen(id, () => {
     
     //fun()
 })
-
-
-// app.use(Gun.serve);
-
-// const server = app.listen(id, () => {
-//     console.log(`Gun listening at http://localhost:${id}/gun`)
-// })
-
-// if (process.argv.length <= 3){
-//     Gun({
-//         web : server,
-//     });
-// }else{
-//     console.log("Server: Connecting to peer " + peer)
-//     Gun({
-//         web : server,
-//         peers: [`http://localhost:${peer}/gun`]
-//     });
-// }
