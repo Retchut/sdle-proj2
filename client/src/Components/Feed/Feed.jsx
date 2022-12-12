@@ -1,50 +1,38 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
+import { Buffer } from "buffer";
 
 import NewPostForm from '../NewPostForm/NewPostForm';
 import SubscribeForm from '../SubscribeForm/SubscribeForm';
 
 export default function Feed(props){
-    const gun = props.gun;
     const userID = props.userID;
     const feedID = props.feedID;
+    const ws = props.ws;
 
     // posts state
     const [feedPosts, setFeedPosts] = useState([])
 
-	// update state on the user's posts node when the state changes
-	useEffect(() => {
-		// gets the posts node
-		// const posts = gun.get(feedID);
-		const posts = gun.get(feedID).get('posts');
-        const subscriptions = gun.get(feedID).get('subscriptions');
-
-		// upon receiving updates from the posts node, calls a function on each update
-		posts.map().once(post => {
-            console.log(post)
-			// updates the local feed
-            const newPost = {
-				id: post.id,               // sender id
-				post: post.post,           // their post
-				timestamp: post.timestamp  // post timestamp
-			};
-
-			setFeedPosts( oldFeedPosts =>[newPost, ...oldFeedPosts])
-		})
-
-        subscriptions.map().once((value) => {
-            gun.get(value).get('posts').map().once((post) => {
-                const newPost = {
-                    id: post.id,               // sender id
-                    post: post.post,           // their post
-                    timestamp: post.timestamp  // post timestamp
-                };
-
-                setFeedPosts(oldFeedPosts => [newPost, ...oldFeedPosts])
-            });
-        });
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[]);
+    ws.onmessage = (newPost) => {
+        newPost = JSON.parse(newPost.data)
+        console.log(newPost)
+        // if it's the result of our post, we 
+        if(newPost._ === undefined){
+            setFeedPosts(oldFeedPosts =>[newPost, ...oldFeedPosts])
+        }
+        else{
+            let found = false;
+            for(const post of feedPosts){
+                if(post._ === undefined)
+                    continue;
+                if(post._['#'] === newPost._['#']){
+                    found = true;
+                    break;
+                }
+            }
+            if(!found)
+                setFeedPosts(oldFeedPosts =>[newPost, ...oldFeedPosts])
+        }
+    };
 
     const orderedFeedPosts = useMemo(() => feedPosts.sort((p1, p2) => p2.timestamp - p1.timestamp), [feedPosts])
 
@@ -52,27 +40,26 @@ export default function Feed(props){
 	 * @brief Saves post to the posts node
 	 */
 	function savePost(newPost) {
-		// const posts = gun.get(userID);
-		const posts = gun.get(userID).get("posts"); 
-
-		// Adds an entry to the node
-		posts.set({
-			id: newPost.id,    // TODO: is the parameter name inside gun id?
-			post: newPost.post,  // TODO: is the parameter name inside gun post?
-			timestamp: Date.now()  // TODO: is the parameter name inside gun timestamp?
-		})
+        const obj = {
+            operation : 'post',
+            data : {
+                id : newPost.id,
+                post : newPost.post,
+                timestamp : Date.now()
+            }
+        }
+        ws.send(Buffer.from(JSON.stringify(obj)));
 	}
 
     	/**
 	 * @brief Saves user to be subscriptions node
 	 */
 	function saveSubscription(newSubscription) {
-		// gets the posts node
-		const subscriptions = gun.get(userID).get("subscriptions");
-		// Adds an entry to the node
-		subscriptions.set(
-			newSubscription.subscription
-        )
+        const obj = {
+            operation : 'subscribe',
+            data : newSubscription.subscription
+        }
+        ws.send(Buffer.from(JSON.stringify(obj)));
 	}
 
     /**
