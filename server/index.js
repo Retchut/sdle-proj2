@@ -51,9 +51,10 @@ wsServer.on('connection', socket => {
         
         if(message.operation === 'post'){
             gun.get(clientName).get("posts").set(message.data);
-            socket.send(JSON.stringify(message.data));
+            //socket.send(JSON.stringify(message.data));
         }
         else if(message.operation === 'subscribe'){
+            gun.get(clientName).get("subscriptions").set(message.data)
             const subscriptionPosts = gun.get(message.data).get("posts");
             subscriptionPosts.map().once(newPost => {
                 socket.send(JSON.stringify(newPost))
@@ -71,7 +72,7 @@ const server = app.listen(id, () => {
     console.log(`Gun listening at http://localhost:${id}/gun`)
     gun = Gun({
         localStorage : false,
-        radisk : false,
+        radisk : true,
         web : server,
         peers: peers
     });

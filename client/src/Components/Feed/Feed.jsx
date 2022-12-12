@@ -15,24 +15,21 @@ export default function Feed(props){
     ws.onmessage = (newPost) => {
         newPost = JSON.parse(newPost.data)
         console.log(newPost)
-        // if it's the result of our post, we 
-        if(newPost._ === undefined){
-            setFeedPosts(oldFeedPosts =>[newPost, ...oldFeedPosts])
-        }
-        else{
-            let found = false;
-            for(const post of feedPosts){
-                if(post._ === undefined)
-                    continue;
-                if(post._['#'] === newPost._['#']){
-                    found = true;
-                    break;
-                }
+
+        let found = false;
+        for(const post of feedPosts){
+            if(post._ === undefined)
+                continue;
+            if(post._['#'] === newPost._['#']){
+                found = true;
+                break;
             }
-            if(!found)
-                setFeedPosts(oldFeedPosts =>[newPost, ...oldFeedPosts])
         }
+        if(!found)
+            setFeedPosts(oldFeedPosts =>[newPost, ...oldFeedPosts])
+
     };
+
 
     const orderedFeedPosts = useMemo(() => feedPosts.sort((p1, p2) => p2.timestamp - p1.timestamp), [feedPosts])
 
